@@ -1,11 +1,26 @@
+<img *ngIf="user" [src]="user.photoURL" [alt]="user.displayName" style="float:right">
+<h1 *ngIf="user">Hello {{ user?.displayName }}</h1>
+<h1 *ngIf="!user">Please login</h1>
+
+
+<button type="button" (click)="register()">Register</button>
+<button type="button" (click)="login()">Login</button>
+<button type="button" (click)="logout()">Logout</button>
+<button type="button" (click)="loginEmail()">Login with email</button>
+<p *ngIf="error">{{ error }}</p>
 <h1>Cuisines</h1>
 <ul>
   <li *ngFor="let c of cuisines | async">{{ c.$key + '- ' + c.$value }}</li>
 </ul>
+<div *ngIf="(exists | async)?.$value">EXISTS</div>
 <h1>Restaurants</h1>
 <ul>
   <li *ngFor="let r of restaurants | async">
-    {{ r.name }} - {{ (r.cuisineType | async)?.$value }}
+    {{ r.name }} -
+    {{ (r.cuisineType | async)?.$value }} -
+    {{ r.address.city }}
+    ({{ r.rating }} star)
+    <span *ngFor></span>
     <ul>
       <li *ngFor="let f of r.featureTypes">
         {{ (f | async)?.$value }}
@@ -13,3 +28,5 @@
     </ul>
   </li>
 </ul>
+
+<button type="button" (click)="onAddRestaurant()">Add restaurant</button>
